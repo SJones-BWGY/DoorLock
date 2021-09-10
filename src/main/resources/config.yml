@@ -1,0 +1,5 @@
+# Enable or disable items
+items:
+    key: true
+    blocklocker: true
+    doordrill: true

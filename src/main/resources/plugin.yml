@@ -1,0 +1,9 @@
+name: Doorlock
+version: '${project.version}'
+main: dev.jones.doorlock.Doorlock
+api-version: 1.17
+authors: [ _joones ]
+description: Lock doors with keys.
+commands:
+  dldebug:
+    description: Debug Command(Only intended for developers, can be enabled in the Doorlock class)
