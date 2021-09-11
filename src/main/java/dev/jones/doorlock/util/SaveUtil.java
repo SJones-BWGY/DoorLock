@@ -73,4 +73,13 @@ public class SaveUtil {
         saveToConfig();
         return config.getStringList("lockable").contains(location.getBlockX()+" "+location.getBlockY()+" "+location.getBlockZ());
     }
+    public static String getVersion(){
+        saveToConfig();
+        return config.getString("version");
+    }
+    public static void setVersion(String ver){
+        saveToConfig();
+        config.set("version",ver);
+        saveToConfig();
+    }
 }

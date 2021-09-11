@@ -1,4 +1,9 @@
-# Enable or disable items
+# Update mode
+# 0 = Disable updates completely(even through commands)
+# 1 = Disable updates on restart
+# 2 = Enable all updates
+update: 2
+# Enable or disable items(true=enables; false=disabled)
 items:
     key: true
     blocklocker: true
