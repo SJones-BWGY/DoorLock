@@ -15,12 +15,7 @@ public class DebugCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args[0].equalsIgnoreCase("getitemtags")){
             Player p=(Player) sender;
-            p.sendMessage("§c§lThe item in your hand has the following keys in its PersistentDataContainer:");
-            PersistentDataContainer container= Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer();
-            for (NamespacedKey key : container.getKeys()) {
-                p.sendMessage("§4"+key.getKey()+ "§c: "+container.get(key, PersistentDataType.STRING));
-            }
-            p.sendMessage("§c§l-----------");
+            p.sendMessage("§cThis command has been removed due to being unsupported in 1.14");
         }
         return false;
     }

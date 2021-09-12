@@ -1,5 +1,6 @@
 package dev.jones.doorlock.listener;
 
+import dev.jones.doorlock.Doorlock;
 import dev.jones.doorlock.util.DoorlockHearbeat;
 import dev.jones.doorlock.util.SaveUtil;
 import org.bukkit.NamespacedKey;
@@ -9,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,11 @@ public class BlockClaimerListener implements Listener {
         if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()!=null){
             PersistentDataContainer container=e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             boolean cont=false;
-            for (NamespacedKey key : container.getKeys()) {
-                if(key.getKey().equals("isblocklocker"))cont=true;
+            if(!container.has(new NamespacedKey(Doorlock.getInstance(),"isblocklocker"),PersistentDataType.STRING)){
+                e.getPlayer().sendMessage("item is no blocklocker!");
+                return;
             }
-            if(!cont)return;
+
             e.setCancelled(true);
             if(SaveUtil.isLockable(e.getClickedBlock().getLocation())&&SaveUtil.getKey(e.getClickedBlock().getLocation())==null){
                 SaveUtil.disableLocking(e.getClickedBlock().getLocation());

@@ -16,6 +16,7 @@ public class ItemStackBuilder {
     private Material material;
     private List<String> lore;
     private Hashtable<String,String> tags=new Hashtable<>();
+    private ItemStack stack;
 
     public ItemStackBuilder(Material material){
         this.material=material;
@@ -24,7 +25,7 @@ public class ItemStackBuilder {
         this.material=stack.getType();
         this.name=Objects.requireNonNull(stack.getItemMeta()).getDisplayName();
         this.lore=stack.getItemMeta().getLore();
-        stack.getItemMeta().getPersistentDataContainer().getKeys().forEach(key->tags.put(key.getKey(),stack.getItemMeta().getPersistentDataContainer().get(key,PersistentDataType.STRING)));
+        this.stack=stack;
     }
 
     public ItemStackBuilder setName(String name) {
@@ -41,7 +42,10 @@ public class ItemStackBuilder {
     }
 
     public ItemStack build(){
-        ItemStack stack=new ItemStack(material);
+        ItemStack stack=this.stack;
+        if(stack==null) {
+            stack = new ItemStack(material);
+        }
         ItemMeta meta=stack.getItemMeta();
         meta.setLore(lore);
         meta.setDisplayName(name);

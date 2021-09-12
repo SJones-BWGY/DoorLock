@@ -1,5 +1,6 @@
 package dev.jones.doorlock.listener;
 
+import dev.jones.doorlock.Doorlock;
 import dev.jones.doorlock.util.DoorlockHearbeat;
 import dev.jones.doorlock.util.ItemStackBuilder;
 import dev.jones.doorlock.util.SaveUtil;
@@ -16,10 +17,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.yaml.snakeyaml.util.EnumUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +28,9 @@ public class KeyListener implements Listener {
     private static List<Player> timeout=new ArrayList<>();
     @EventHandler
     public void onCraft(CraftItemEvent e){
-        e.getRecipe().getResult().getItemMeta().getPersistentDataContainer().getKeys().forEach(key->{
-            if(key.getKey().equalsIgnoreCase("isKey")){
-                e.setCurrentItem(new ItemStackBuilder(e.getRecipe().getResult()).addNbtTag("key", UUID.randomUUID().toString()).build());
-            }
-        });
+        if(e.getRecipe().getResult().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Doorlock.getInstance(),"iskey"),PersistentDataType.STRING)!=null)
+            e.setCurrentItem(new ItemStackBuilder(e.getRecipe().getResult()).addNbtTag("key", UUID.randomUUID().toString()).build());
+
     }
     @EventHandler
     public void onInteract(PlayerInteractEvent e){
@@ -82,23 +79,18 @@ public class KeyListener implements Listener {
         }
         if(e.getClickedBlock()==null)return;
         PersistentDataContainer container=e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-        boolean cont=false;
         String key=null;
-        for (NamespacedKey nkey : container.getKeys()) {
-            if(nkey.getKey().equalsIgnoreCase("key")){
-                key=container.get(nkey, PersistentDataType.STRING);
-            }else if(nkey.getKey().equalsIgnoreCase("isdoordrill")){
-                if(e.getAction()!=Action.LEFT_CLICK_BLOCK){
-                    e.getPlayer().sendMessage("§cTo unlock a block you have to break it.");
-                    e.setCancelled(true);
-                    return;
-                }
-                e.setCancelled(false);
-                return;
-            }
-        }
+        key=container.get(new NamespacedKey(Doorlock.getInstance(),"key"),PersistentDataType.STRING);
         if(key==null){
             key="missing";
+        }
+        if(container.has(new NamespacedKey(Doorlock.getInstance(),"isdoordrill"),PersistentDataType.STRING)){
+            if(e.getAction()==Action.LEFT_CLICK_BLOCK){
+                e.setCancelled(false);
+            }else{
+                e.getPlayer().sendMessage("§cYou can't interact with locked blocks with this item.");
+            }
+            return;
         }
         if(key.equals(SaveUtil.getKey(door))){
             e.setCancelled(false);

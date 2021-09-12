@@ -28,7 +28,7 @@ public class DoorlockCommand implements CommandExecutor {
                 sender.sendMessage("§cReloading the plugin...");
                 sender.sendMessage("§7This can take a little while.");
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Doorlock.getInstance(),()->{
-                    Doorlock.getRecipes().forEach(Doorlock.getInstance().getServer()::removeRecipe);
+                    Doorlock.getInstance().getServer().resetRecipes();
                     Doorlock.getInstance().onEnable();
                 },1);
 

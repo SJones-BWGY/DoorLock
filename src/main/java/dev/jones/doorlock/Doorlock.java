@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -76,7 +77,7 @@ public final class Doorlock extends JavaPlugin {
         ItemStack keyItem=new ItemStackBuilder(Material.GOLD_NUGGET)
                 .setName("§a§lKey")
                 .setLore("§7Locks doors.","§7(Shift-Click to unlock)")
-                .addNbtTag("isKey","1")
+                .addNbtTag("iskey","1")
                 .build();
 
         NamespacedKey keyKey=new NamespacedKey(this,"key");
@@ -97,7 +98,7 @@ public final class Doorlock extends JavaPlugin {
         ItemStack blockClaimerItem=new ItemStackBuilder(Material.IRON_AXE)
                 .setName("§a§lBlock Locker")
                 .setLore("§7Makes blocks lockable with keys.")
-                .addNbtTag("isBlockLocker","1")
+                .addNbtTag("isblocklocker","1")
                 .build();
 
         NamespacedKey blockClaimerKey=new NamespacedKey(this,"block_locker");
@@ -128,7 +129,7 @@ public final class Doorlock extends JavaPlugin {
                 .build();
         Damageable doorDrillMeta=(Damageable) doorDrillItem.getItemMeta();
         doorDrillMeta.setDamage(1550);
-        doorDrillItem.setItemMeta(doorDrillMeta);
+        doorDrillItem.setItemMeta((ItemMeta) doorDrillMeta);
 
         NamespacedKey doorDrillKey=new NamespacedKey(this,"door_drill");
         recipes.add(doorDrillKey);
@@ -154,7 +155,7 @@ public final class Doorlock extends JavaPlugin {
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
-        recipes.forEach(getServer()::removeRecipe);
+        this.getServer().resetRecipes();
         Updater.pluginDisabled();
     }
 
