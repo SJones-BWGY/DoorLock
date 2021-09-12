@@ -58,6 +58,8 @@ public class Updater {
                 updated=true;
 
                 return true;
+            }else{
+                Doorlock.getInstance().getLogger().info("You plugin has the newest version installed!");
             }
         } catch (IOException e) {
             e.printStackTrace();

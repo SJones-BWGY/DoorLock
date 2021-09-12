@@ -1,9 +1,6 @@
 package dev.jones.doorlock;
 
-import dev.jones.doorlock.command.DebugCommand;
-import dev.jones.doorlock.command.DisabledCommand;
-import dev.jones.doorlock.command.DoorlockCommand;
-import dev.jones.doorlock.command.DoorlockCommandTabCompleter;
+import dev.jones.doorlock.command.*;
 import dev.jones.doorlock.listener.BlockClaimerListener;
 import dev.jones.doorlock.listener.DebugListener;
 import dev.jones.doorlock.listener.KeyListener;
@@ -42,7 +39,7 @@ public final class Doorlock extends JavaPlugin {
         /*
         Load config
          */
-        this.saveDefaultConfig();
+        this.reloadConfig();
         for (String key : this.getConfig().getDefaults().getKeys(true)) {
             if(!this.getConfig().contains(key,true)){
                 this.getLogger().warning("Config path "+key+" is missing! Adding it.");
@@ -69,6 +66,9 @@ public final class Doorlock extends JavaPlugin {
 
         this.getCommand("doorlock").setExecutor(new DoorlockCommand());
         this.getCommand("doorlock").setTabCompleter(new DoorlockCommandTabCompleter());
+
+        this.getCommand("unlock").setExecutor(new UnlockCommand());
+        this.getCommand("unlock").setTabCompleter(new UnlockCommandTabCompleter());
 
         /*
         Register Key

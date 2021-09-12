@@ -76,7 +76,7 @@ public class KeyListener implements Listener {
         }
         if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()==null){
             if(locked){
-                e.getPlayer().sendMessage("§c§lYou need the correct key to interact with this block!");
+                e.getPlayer().sendMessage("§cYou need the correct key to interact with this block!");
             }
             return;
         }
@@ -89,7 +89,7 @@ public class KeyListener implements Listener {
                 key=container.get(nkey, PersistentDataType.STRING);
             }else if(nkey.getKey().equalsIgnoreCase("isdoordrill")){
                 if(e.getAction()!=Action.LEFT_CLICK_BLOCK){
-                    e.getPlayer().sendMessage("§c§lTo unlock a block you have to break it.");
+                    e.getPlayer().sendMessage("§cTo unlock a block you have to break it.");
                     e.setCancelled(true);
                     return;
                 }
@@ -104,18 +104,18 @@ public class KeyListener implements Listener {
             e.setCancelled(false);
             if(e.getPlayer().isSneaking()&&e.getAction()==Action.RIGHT_CLICK_BLOCK){
                 SaveUtil.unlockDoor(door);
-                e.getPlayer().sendMessage("§a§lBlock unlocked.");
+                e.getPlayer().sendMessage("§aBlock unlocked.");
             }
         }else if(SaveUtil.getKey(door)==null&&!key.equals("missing")){
             SaveUtil.lockDoor(key,door);
-            e.getPlayer().sendMessage("§a§lBlock locked.");
+            e.getPlayer().sendMessage("§aBlock locked.");
             e.setCancelled(true);
         }else if(SaveUtil.getKey(door)==null){
             /*
             Ignore if door has no key
              */
         }else{
-            e.getPlayer().sendMessage("§c§lYou need the correct key to interact with this block!");
+            e.getPlayer().sendMessage("§cYou need the correct key to interact with this block!");
         }
     }
     @EventHandler

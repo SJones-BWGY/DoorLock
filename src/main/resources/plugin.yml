@@ -10,8 +10,13 @@ commands:
     permission: doorlock.debug
     permission-message: §cYou are not permitted to use this command!
   doorlock:
-    description: Shows basic plugin information, can be used to reload the plugin or to check for updates
+    description: Can be used to reload the plugin, to check for updates or check the plugin version
     permission: doorlock.manage
     permission-message: §cYou are not permitted to use this command!
-    usage: §c/doorlock <version|update|reload>
+    usage: §cUse /doorlock <version|update|reload>
+  unlock:
+    description: Unlocks the block you are looking at.
+    permission: doorlock.unlock
+    permission-message: §cYou are not permitted to use this command!
+    usage: §cUse /unlock without arguments
 

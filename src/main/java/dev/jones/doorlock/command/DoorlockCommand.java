@@ -17,7 +17,7 @@ public class DoorlockCommand implements CommandExecutor {
         if(args.length==1){
             if(args[0].equalsIgnoreCase("version")){
                 sender.sendMessage("§cDoorlock by _joones is installed on this server");
-                sender.sendMessage("§7: "+ SaveUtil.getVersion());
+                sender.sendMessage("§7Plugin version: "+ SaveUtil.getVersion());
                 return true;
             }else if(args[0].equalsIgnoreCase("update")){
                 sender.sendMessage("§cChecking for updates...");
